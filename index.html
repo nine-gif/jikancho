@@ -420,7 +420,7 @@ function renderHeader(){
       <div class="hact">${isT?'':'<button class="ghost" data-act="today">今日</button>'}<button class="plus" data-act="add" aria-label="追加">${ICON.plus}</button></div>
     </div>
     <div class="sub"><span class="num">${d.getFullYear()}</span>${parts.map(p=>`<span>${p}</span>`).join('')}</div>
-    ${S.showWeek?weekStrip():''}
+    ${weekStrip()}
     <button class="grip" data-act="toggle-week" aria-label="${S.showWeek?'週の表示を閉じる':'週を表示'}"></button>`;
   }else{
     const t={todo:'ToDo',habit:'習慣',cal:'カレンダー',set:'設定'}[S.page];
@@ -726,7 +726,7 @@ hdr.addEventListener('touchstart',e=>{const t=e.touches[0];hs={x:t.clientX,y:t.c
 hdr.addEventListener('touchend',e=>{
   if(!hs||S.page!=='tl')return;const t=e.changedTouches[0],dx=t.clientX-hs.x,dy=t.clientY-hs.y;hs=null;
   if(Math.abs(dy)>30&&Math.abs(dy)>Math.abs(dx)){const want=dy>0;if(want!==S.showWeek){S.showWeek=want;render()}}
-  else if(S.showWeek&&Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.6&&e.target.closest('.week-strip'))shiftDay(dx<0?7:-7);
+  else if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.6&&e.target.closest('.week-strip'))shiftDay(dx<0?7:-7);
 },{passive:true});
 
 /* 現在時刻の線を1分ごとに進める */
